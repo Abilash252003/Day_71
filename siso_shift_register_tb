@@ -1,0 +1,56 @@
+///100 Days of RTL///
+
+///Abilash P///
+
+///SISO shift register///
+
+module siso_tb ();
+  reg CLK, clear;
+  reg si;
+  wire so;
+  wire [3:0] temp;
+  
+  siso DUT(.CLK(CLK), .clear(clear), .si(si), .so(so), .temp(temp));
+  
+  initial 
+    begin
+      CLK=1;
+      forever #5 CLK = ~CLK;  
+    end 
+  
+  initial
+    begin
+      clear = 1'b1;
+      #10;
+      clear = 1'b0;
+      si    = 4'b0;
+      #10;
+      si    = 4'b1;
+      #10;
+      si    = 4'b1;
+      #10;
+      si    = 4'b0;
+      #10;
+      si    = 4'b1;
+      #10;
+      si    = 4'b0;
+      #10;
+      si    = 4'b1;
+      #10;
+      si    = 4'b0;
+      #50;
+      $finish;
+    end
+   
+  initial
+     begin
+       $dumpfile("dump.vcd");
+       $dumpvars(1);
+     end
+  
+  initial
+    $monitor("simtime = %g, CLK = %b, clear = %b, temp = %b, so = %b", $time, CLK, clear,temp, so);
+  
+endmodule
+  
+      
